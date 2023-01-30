@@ -96,3 +96,27 @@ Nx Cloud pairs with Nx in order to enable you to build and test code more rapidl
 Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
 
 Visit [Nx Cloud](https://nx.app/) to learn more.
+
+## Step 1
+Generate `Components` library by: `npx nx generate @nrwl/angular:library --name=components --style=scss --buildable --importPath=@itb2/components --linter=eslint --publishable --skipTsConfig`
+
+## Step 2
+Install `"@nrwl/storybook": "^10.2.1"` by: `npm i @nrwl/storybook@10.2 -D`
+
+##Step 3
+Configuration storybook to `Components` library by: `npx nx generate @nrwl/angular:storybook-configuration --name=components --generateStories --linter=eslint`
+
+##Step 4
+Generate `ButtonModule` and `ButtonComponent`:
+`npx nx generate @schematics/angular:module --name=button --project=components --path=libs/components/src/lib`
+`npx nx generate @schematics/angular:component --name=button --project=components --style=scss --changeDetection=OnPush --export --flat --path=libs/components/src/lib/button --selector=itb2-button`
+
+##Step 5
+Generate `button stories` file: `npx nx generate @nrwl/angular:stories --name=components`
+
+##Step 6
+Generate `InputModule` and `InputComponent`:
+`npx nx generate @schematics/angular:module --name=input --project=components --path=libs/components`
+`npx nx generate @schematics/angular:component --name=input --project=components --changeDetection=OnPush --export --flat --path=libs/components/input`
+
+Rerun `npx nx generate @nrwl/angular:stories --name=components`

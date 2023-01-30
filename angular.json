@@ -21,8 +21,13 @@
             "polyfills": "apps/main/src/polyfills.ts",
             "tsConfig": "apps/main/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/main/src/favicon.ico", "apps/main/src/assets"],
-            "styles": ["apps/main/src/styles.scss"],
+            "assets": [
+              "apps/main/src/favicon.ico",
+              "apps/main/src/assets"
+            ],
+            "styles": [
+              "apps/main/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -80,7 +85,10 @@
               "apps/main/tsconfig.app.json",
               "apps/main/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/main/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/main/**/*"
+            ]
           }
         },
         "test": {
@@ -113,9 +121,91 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/main-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/main-e2e/**/*"]
+            "tsConfig": [
+              "apps/main-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/main-e2e/**/*"
+            ]
           }
+        }
+      }
+    },
+    "components": {
+      "projectType": "library",
+      "root": "libs/components",
+      "sourceRoot": "libs/components/src",
+      "prefix": "itb2",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/components/tsconfig.lib.json",
+            "project": "libs/components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "tsConfig": [
+              "libs/components/tsconfig.lib.json",
+              "libs/components/tsconfig.spec.json",
+              "libs/components/.storybook/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/components/**/*"
+            ],
+            "linter": "eslint"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/components",
+            "config": {
+              "configFolder": "libs/components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       }
     }
